@@ -29,6 +29,8 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  String description = "Cover 친구에서 연인 - standingegg";
+  late bool elipsis;
 
   void _onVideoChange() {
     if (_videoPlayerController.value.isInitialized) {
@@ -49,6 +51,7 @@ class _VideoPostState extends State<VideoPost>
   @override
   void initState() {
     super.initState();
+    elipsis = description.length > 10 ? true : false;
     _initVideoPlayer();
     _animationController = AnimationController(
       vsync: this,
@@ -81,6 +84,12 @@ class _VideoPostState extends State<VideoPost>
     }
     setState(() {
       _isPaused = !_isPaused;
+    });
+  }
+
+  void _onSeeMore() {
+    setState(() {
+      elipsis = !elipsis;
     });
   }
 
@@ -130,8 +139,8 @@ class _VideoPostState extends State<VideoPost>
             left: 10,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   "@승현",
                   style: TextStyle(
                     fontSize: Sizes.size20,
@@ -140,12 +149,31 @@ class _VideoPostState extends State<VideoPost>
                   ),
                 ),
                 Gaps.v16,
-                Text(
-                  "Cover 친구에서 연인 - standingEgg",
-                  style: TextStyle(
-                    fontSize: Sizes.size16,
-                    color: Colors.white,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      elipsis
+                          ? "${description.substring(0, 10)}..."
+                          : description,
+                      style: const TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: Sizes.size16,
+                        color: Colors.white,
+                      ),
+                    ),
+                    if (elipsis == true)
+                      GestureDetector(
+                        onTap: _onSeeMore,
+                        child: const Text(
+                          "See more",
+                          style: TextStyle(
+                            overflow: TextOverflow.ellipsis,
+                            fontSize: Sizes.size16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                  ],
                 )
               ],
             ),
