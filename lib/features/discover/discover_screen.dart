@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
@@ -21,21 +20,56 @@ class DiscoverScreen extends StatefulWidget {
   State<DiscoverScreen> createState() => _DiscoverScreenState();
 }
 
-class _DiscoverScreenState extends State<DiscoverScreen> {
-  final TextEditingController _textEditingController = TextEditingController(
-    text: "Initial Text",
-  );
+class _DiscoverScreenState extends State<DiscoverScreen>
+    with SingleTickerProviderStateMixin {
+  final TextEditingController _textEditingController = TextEditingController();
+  late TabController _tabController;
+  String _text = "";
 
-  void _onSearchChanged(String value) {
-    print("Searching form $value");
+  @override
+  void initState() {
+    super.initState();
+
+    _textEditingController.addListener(() {
+      // print("Second text field: $_textEditingController.text");
+      setState(() {
+        _text = _textEditingController.text;
+      });
+    });
+
+    _tabController = TabController(
+      length: tabs.length,
+      vsync: this,
+    );
+
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        setState(() {
+          _onUnFocusSearch();
+        });
+      }
+    });
   }
 
-  void _onSearchSubmitted(String value) {
-    print("Submitted $value");
+  void _onSearchSubmitted() {
+    if (_text != "") {
+      print(_text); // 검색어 전달자 사전작업
+    }
+  }
+
+  void _onUnFocusSearch() {
+    FocusScope.of(context).unfocus();
+  }
+
+  void _onResetText() {
+    setState(() {
+      _textEditingController.text = '';
+    });
   }
 
   @override
   void dispose() {
+    _tabController.dispose();
     _textEditingController.dispose();
     super.dispose();
   }
@@ -48,12 +82,67 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
           elevation: 1,
-          title: CupertinoSearchTextField(
-            controller: _textEditingController,
-            onChanged: _onSearchChanged,
-            onSubmitted: _onSearchSubmitted,
+          // title: CupertinoSearchTextField(
+          //   controller: _textEditingController,
+          //   onChanged: _onSearchChanged,
+          //   onSubmitted: _onSearchSubmitted,
+          // ),
+          title: SizedBox(
+            height: Sizes.size44,
+            child: TextField(
+              textInputAction: TextInputAction.search,
+              onEditingComplete: _onSearchSubmitted,
+              controller: _textEditingController,
+              expands: true,
+              minLines: null,
+              maxLines: null,
+              cursorColor: Theme.of(context).primaryColor,
+              decoration: InputDecoration(
+                prefixIcon: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: Sizes.size12,
+                    horizontal: Sizes.size12,
+                  ),
+                  child: FaIcon(
+                    FontAwesomeIcons.magnifyingGlass,
+                    color: Colors.grey.shade900,
+                    size: Sizes.size20,
+                  ),
+                ),
+                hintText: "Search",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                    Sizes.size12,
+                  ),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.grey.shade200,
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: Sizes.size12,
+                ),
+                suffixIcon: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Gaps.h14,
+                    if (_text != '')
+                      GestureDetector(
+                        onTap: _onResetText,
+                        child: FaIcon(
+                          FontAwesomeIcons.circleXmark,
+                          color: Colors.grey.shade900,
+                          size: Sizes.size24,
+                        ),
+                      ),
+                    Gaps.h14,
+                  ],
+                ),
+              ),
+            ),
           ),
           bottom: TabBar(
+            controller: _tabController,
             splashFactory: NoSplash.splashFactory,
             padding: const EdgeInsets.symmetric(
               horizontal: Sizes.size16,
@@ -75,6 +164,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
           ),
         ),
         body: TabBarView(
+          controller: _tabController,
           children: [
             GridView.builder(
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
@@ -103,7 +193,7 @@ class _DiscoverScreenState extends State<DiscoverScreen> {
                         fit: BoxFit.cover,
                         placeholder: "assets/images/chester.png",
                         image:
-                            "https://i.namu.wiki/i/d_NYgdbA5RzfjwMK6w0qxsAdCZpRzfPO7iRBeaCUE2c5z8c2AuXjnj14pXySP6xygvqwnayPDDj4T_mJ08l-aFWrrCH4VEGqKvAAmZo42VwWmn48xafeJgAhB2smwsVgsGwuvsVK9oYVaCHLIOGDpA.webp",
+                            "https://akns-images.eonline.com/eol_images/Entire_Site/202326/rs_1200x1200-230306173951-Tyga-and-Avril-Lavigne-8.jpg?fit=around%7C1080:1080&output-quality=90&crop=1080:1080;center,top",
                       ),
                     ),
                   ),
