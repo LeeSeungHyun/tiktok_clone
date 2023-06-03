@@ -31,7 +31,6 @@ class _DiscoverScreenState extends State<DiscoverScreen>
     super.initState();
 
     _textEditingController.addListener(() {
-      // print("Second text field: $_textEditingController.text");
       setState(() {
         _text = _textEditingController.text;
       });
@@ -53,7 +52,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
 
   void _onSearchSubmitted() {
     if (_text != "") {
-      print(_text); // 검색어 전달자 사전작업
+      print(_text);
     }
   }
 
