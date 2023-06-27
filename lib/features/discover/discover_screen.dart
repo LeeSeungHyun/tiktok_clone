@@ -88,56 +88,61 @@ class _DiscoverScreenState extends State<DiscoverScreen>
           //   onChanged: _onSearchChanged,
           //   onSubmitted: _onSearchSubmitted,
           // ),
-          title: SizedBox(
-            height: Sizes.size44,
-            child: TextField(
-              textInputAction: TextInputAction.search,
-              onEditingComplete: _onSearchSubmitted,
-              controller: _textEditingController,
-              expands: true,
-              minLines: null,
-              maxLines: null,
-              cursorColor: Theme.of(context).primaryColor,
-              decoration: InputDecoration(
-                prefixIcon: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: Sizes.size12,
+          title: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: Breakpoints.sm,
+            ),
+            child: SizedBox(
+              height: Sizes.size44,
+              child: TextField(
+                textInputAction: TextInputAction.search,
+                onEditingComplete: _onSearchSubmitted,
+                controller: _textEditingController,
+                expands: true,
+                minLines: null,
+                maxLines: null,
+                cursorColor: Theme.of(context).primaryColor,
+                decoration: InputDecoration(
+                  prefixIcon: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: Sizes.size12,
+                      horizontal: Sizes.size12,
+                    ),
+                    child: FaIcon(
+                      FontAwesomeIcons.magnifyingGlass,
+                      color: Colors.grey.shade900,
+                      size: Sizes.size20,
+                    ),
+                  ),
+                  hintText: "Search",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(
+                      Sizes.size12,
+                    ),
+                    borderSide: BorderSide.none,
+                  ),
+                  filled: true,
+                  fillColor: Colors.grey.shade200,
+                  contentPadding: const EdgeInsets.symmetric(
                     horizontal: Sizes.size12,
                   ),
-                  child: FaIcon(
-                    FontAwesomeIcons.magnifyingGlass,
-                    color: Colors.grey.shade900,
-                    size: Sizes.size20,
-                  ),
-                ),
-                hintText: "Search",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(
-                    Sizes.size12,
-                  ),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.grey.shade200,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: Sizes.size12,
-                ),
-                suffixIcon: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Gaps.h14,
-                    if (_text != '')
-                      GestureDetector(
-                        onTap: _onResetText,
-                        child: FaIcon(
-                          FontAwesomeIcons.circleXmark,
-                          color: Colors.grey.shade900,
-                          size: Sizes.size24,
+                  suffixIcon: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Gaps.h14,
+                      if (_text != '')
+                        GestureDetector(
+                          onTap: _onResetText,
+                          child: FaIcon(
+                            FontAwesomeIcons.circleXmark,
+                            color: Colors.grey.shade900,
+                            size: Sizes.size24,
+                          ),
                         ),
-                      ),
-                    Gaps.h14,
-                  ],
+                      Gaps.h14,
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -179,71 +184,74 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                 mainAxisSpacing: Sizes.size10,
                 childAspectRatio: 9 / 20,
               ),
-              itemBuilder: (context, index) => Column(
-                children: [
-                  Container(
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(
-                        Sizes.size4,
+              itemBuilder: (context, index) => LayoutBuilder(
+                builder: (context, constraits) => Column(
+                  children: [
+                    Container(
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          Sizes.size4,
+                        ),
+                      ),
+                      child: AspectRatio(
+                        aspectRatio: 9 / 16,
+                        child: FadeInImage.assetNetwork(
+                          fit: BoxFit.cover,
+                          placeholder: "assets/images/chester.png",
+                          image:
+                              "https://akns-images.eonline.com/eol_images/Entire_Site/202326/rs_1200x1200-230306173951-Tyga-and-Avril-Lavigne-8.jpg?fit=around%7C1080:1080&output-quality=90&crop=1080:1080;center,top",
+                        ),
                       ),
                     ),
-                    child: AspectRatio(
-                      aspectRatio: 9 / 16,
-                      child: FadeInImage.assetNetwork(
-                        fit: BoxFit.cover,
-                        placeholder: "assets/images/chester.png",
-                        image:
-                            "https://akns-images.eonline.com/eol_images/Entire_Site/202326/rs_1200x1200-230306173951-Tyga-and-Avril-Lavigne-8.jpg?fit=around%7C1080:1080&output-quality=90&crop=1080:1080;center,top",
+                    Gaps.v10,
+                    Text(
+                      "${constraits.maxWidth}I'm gonna make the cut for singing performance",
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: const TextStyle(
+                        fontSize: Sizes.size16 + Sizes.size2,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ),
-                  Gaps.v10,
-                  const Text(
-                    "I'm gonna make the cut for singing performance",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                      fontSize: Sizes.size16 + Sizes.size2,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Gaps.v8,
-                  DefaultTextStyle(
-                    style: TextStyle(
-                      color: Colors.grey.shade600,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    child: Row(
-                      children: [
-                        const CircleAvatar(
-                          radius: 12,
-                          backgroundImage: NetworkImage(
-                            "https://avatars.githubusercontent.com/u/14923625?v=4",
-                          ),
-                        ),
-                        Gaps.h4,
-                        const Expanded(
-                          child: Text(
-                            "My avatar is going to be very long",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                        Gaps.h4,
-                        FaIcon(
-                          FontAwesomeIcons.heart,
-                          size: Sizes.size16,
+                    Gaps.v8,
+                    if (constraits.maxWidth < 200 || constraits.maxWidth > 250)
+                      DefaultTextStyle(
+                        style: TextStyle(
                           color: Colors.grey.shade600,
+                          fontWeight: FontWeight.w600,
                         ),
-                        Gaps.h2,
-                        const Text(
-                          "2.5M",
-                        )
-                      ],
-                    ),
-                  )
-                ],
+                        child: Row(
+                          children: [
+                            const CircleAvatar(
+                              radius: 12,
+                              backgroundImage: NetworkImage(
+                                "https://avatars.githubusercontent.com/u/14923625?v=4",
+                              ),
+                            ),
+                            Gaps.h4,
+                            const Expanded(
+                              child: Text(
+                                "My avatar is going to be very long",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Gaps.h4,
+                            FaIcon(
+                              FontAwesomeIcons.heart,
+                              size: Sizes.size16,
+                              color: Colors.grey.shade600,
+                            ),
+                            Gaps.h2,
+                            const Text(
+                              "2.5M",
+                            )
+                          ],
+                        ),
+                      )
+                  ],
+                ),
               ),
             ),
             for (var tab in tabs.skip(1))
