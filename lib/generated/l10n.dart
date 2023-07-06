@@ -70,13 +70,13 @@ class S {
     );
   }
 
-  /// `Create a profile, follow other accounts, make your own videos, and more.`
-  String get signUpSubtitle {
+  /// `Create a profile, follow other accounts, make your own {videoCount, plural, =0{no videos} =1{video} other{videos}}, and more.`
+  String signUpSubtitle(num videoCount) {
     return Intl.message(
-      'Create a profile, follow other accounts, make your own videos, and more.',
+      'Create a profile, follow other accounts, make your own ${Intl.plural(videoCount, zero: 'no videos', one: 'video', other: 'videos')}, and more.',
       name: 'signUpSubtitle',
       desc: '',
-      args: [],
+      args: [videoCount],
     );
   }
 
@@ -110,13 +110,58 @@ class S {
     );
   }
 
-  /// `Log in`
-  String get logIn {
+  /// `Log in {gender, select, male{sir} female{madam} other{human}}.`
+  String logIn(String gender) {
     return Intl.message(
-      'Log in',
+      'Log in ${Intl.gender(gender, male: 'sir', female: 'madam', other: 'human')}.',
       name: 'logIn',
       desc: '',
-      args: [],
+      args: [gender],
+    );
+  }
+
+  /// `{potato}`
+  String likeCount(int potato) {
+    final NumberFormat potatoNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String potatoString = potatoNumberFormat.format(potato);
+
+    return Intl.message(
+      potatoString,
+      name: 'likeCount',
+      desc: 'Anything you want',
+      args: [potatoString],
+    );
+  }
+
+  /// `{potato}`
+  String commentCount(int potato) {
+    final NumberFormat potatoNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String potatoString = potatoNumberFormat.format(potato);
+
+    return Intl.message(
+      potatoString,
+      name: 'commentCount',
+      desc: 'Anything you want',
+      args: [potatoString],
+    );
+  }
+
+  /// `{value} {value2, plural, =1{comment} other{comments}}`
+  String commentTitle(int value, num value2) {
+    final NumberFormat valueNumberFormat = NumberFormat.compact(
+      locale: Intl.getCurrentLocale(),
+    );
+    final String valueString = valueNumberFormat.format(value);
+
+    return Intl.message(
+      '$valueString ${Intl.plural(value2, one: 'comment', other: 'comments')}',
+      name: 'commentTitle',
+      desc: 'Anything you want',
+      args: [valueString, value2],
     );
   }
 }

@@ -63,7 +63,7 @@ class SingUpScreen extends StatelessWidget {
                   Opacity(
                     opacity: 0.7,
                     child: Text(
-                      S.of(context).signUpSubtitle,
+                      S.of(context).signUpSubtitle(0),
                       style: Theme.of(context).textTheme.titleMedium,
                       textAlign: TextAlign.center,
                     ),
@@ -125,7 +125,7 @@ class SingUpScreen extends StatelessWidget {
                   GestureDetector(
                     onTap: () => _onLoginTap(context),
                     child: Text(
-                      S.of(context).logIn,
+                      S.of(context).logIn("male"),
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: Sizes.size16,
