@@ -53,7 +53,7 @@ class SingUpScreen extends StatelessWidget {
                 children: [
                   Gaps.v80,
                   Text(
-                    S.of(context).signUpTitle("TikTok"),
+                    S.of(context).signUpTitle("TikTok", DateTime.now()),
                     style: const TextStyle(
                       fontSize: Sizes.size24,
                       fontWeight: FontWeight.w700,
