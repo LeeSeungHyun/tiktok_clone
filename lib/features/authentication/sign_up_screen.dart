@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/authentication/login_screen.dart';
@@ -20,8 +21,9 @@ class SingUpScreen extends StatelessWidget {
     //   ),
     // );
     // print(result);
-    final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
-    print(result);
+    // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
+    // print(result);
+    context.go(LoginScreen.routeName); //go는 back버튼이 필요없을 때 유용
   }
 
   void _onEmailTap(BuildContext context) {
@@ -53,7 +55,8 @@ class SingUpScreen extends StatelessWidget {
     //     },
     //   ),
     // );
-    Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    // Navigator.of(context).pushNamed(UsernameScreen.routeName);
+    context.go(UsernameScreen.routeName);
   }
 
   @override
