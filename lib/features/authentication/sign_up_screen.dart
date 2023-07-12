@@ -11,7 +11,8 @@ import 'package:tiktok_clone/generated/l10n.dart';
 import 'package:tiktok_clone/utils.dart';
 
 class SingUpScreen extends StatelessWidget {
-  static const routeName = "/";
+  static const routeURL = "/";
+  static const routeName = "signUp";
   const SingUpScreen({super.key});
 
   void _onLoginTap(BuildContext context) async {
@@ -23,7 +24,7 @@ class SingUpScreen extends StatelessWidget {
     // print(result);
     // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
     // print(result);
-    context.go(LoginScreen.routeName); //go는 back버튼이 필요없을 때 유용
+    context.push(LoginScreen.routeName); //go는 back버튼이 필요없을 때 유용
   }
 
   void _onEmailTap(BuildContext context) {
@@ -56,7 +57,8 @@ class SingUpScreen extends StatelessWidget {
     //   ),
     // );
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
-    context.go(UsernameScreen.routeName);
+    // context.push(UsernameScreen.routeName);
+    context.pushNamed(UsernameScreen.routeName);
   }
 
   @override
