@@ -60,11 +60,11 @@ class _TutorialScreenState extends State<TutorialScreen> {
   }
 
   void _onEnterAppTap() {
-    Navigator.of(context).pushAndRemoveUntil(
+    Navigator.push(
+      context,
       MaterialPageRoute(
         builder: (context) => const MainNavigationScreen(),
       ),
-      (route) => false,
     );
   }
 
