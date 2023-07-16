@@ -45,6 +45,7 @@ dependencies:
   go_router: 9.0.3
   camera: ^0.10.5+2
   permission_handler: ^10.4.3
+  gallery_saver: ^2.3.2
 
 dev_dependencies:
   flutter_test:
