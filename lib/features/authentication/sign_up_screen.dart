@@ -24,7 +24,7 @@ class SingUpScreen extends StatelessWidget {
     // print(result);
     // final result = await Navigator.of(context).pushNamed(LoginScreen.routeName);
     // print(result);
-    context.push(LoginScreen.routeName); //go는 back버튼이 필요없을 때 유용
+    context.pushNamed(LoginScreen.routeName); //go는 back버튼이 필요없을 때 유용
   }
 
   void _onEmailTap(BuildContext context) {
@@ -58,7 +58,12 @@ class SingUpScreen extends StatelessWidget {
     // );
     // Navigator.of(context).pushNamed(UsernameScreen.routeName);
     // context.push(UsernameScreen.routeName);
-    context.pushNamed(UsernameScreen.routeName);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const UsernameScreen(),
+      ),
+    );
   }
 
   @override
