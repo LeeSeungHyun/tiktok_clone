@@ -39,7 +39,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
     //     builder: (context) => const InterestsScreen(),
     //   ),
     // );
-    context.pushReplacementNamed(InterestsScreen.routeName);
+    context.goNamed(InterestsScreen.routeName);
   }
 
   void _setTextFieldDate(DateTime date) {
