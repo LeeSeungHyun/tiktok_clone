@@ -34,7 +34,7 @@ class _VideoPostState extends State<VideoPost>
 
   bool _isPaused = false;
 
-  bool _autoMute = videoConfig.autoMute;
+  bool _autoMute = videoConfig.value;
 
   final String _description = "Cover 친구에서 연인 - standingegg";
   late bool _elipsis;
@@ -73,7 +73,7 @@ class _VideoPostState extends State<VideoPost>
 
     videoConfig.addListener(() {
       setState(() {
-        _autoMute = videoConfig.autoMute;
+        _autoMute = videoConfig.value;
       });
     });
   }
@@ -176,14 +176,15 @@ class _VideoPostState extends State<VideoPost>
             left: 20,
             top: 40,
             child: IconButton(
-              icon: FaIcon(
-                _autoMute
-                    ? FontAwesomeIcons.volumeOff
-                    : FontAwesomeIcons.volumeHigh,
-                color: Colors.white,
-              ),
-              onPressed: videoConfig.toggleAutoMute,
-            ),
+                icon: FaIcon(
+                  _autoMute
+                      ? FontAwesomeIcons.volumeOff
+                      : FontAwesomeIcons.volumeHigh,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  videoConfig.value = !videoConfig.value;
+                }),
           ),
           Positioned(
             bottom: 20,

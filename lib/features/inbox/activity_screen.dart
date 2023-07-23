@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/utils.dart';
 
 class ActivityScreen extends StatefulWidget {
   static const String routeName = "activity";
@@ -45,6 +45,7 @@ class _ActivityScreenState extends State<ActivityScreen>
   ];
 
   bool _showBarrier = false;
+  bool isDark = false;
 
   // this를 사용할 경우 앞에 late를 붙여줘야 초기화 시킬 수 있다.
   late final AnimationController _animationController = AnimationController(
@@ -70,6 +71,11 @@ class _ActivityScreenState extends State<ActivityScreen>
   @override
   void initState() {
     super.initState();
+    darkModeConfig.addListener(() {
+      setState(() {
+        isDark = darkModeConfig.value;
+      });
+    });
   }
 
   void _onDismissed(String notification) {
@@ -97,7 +103,6 @@ class _ActivityScreenState extends State<ActivityScreen>
 
   @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
     return Scaffold(
       appBar: AppBar(
         title: GestureDetector(

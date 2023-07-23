@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/features/discover/discover_screen.dart';
@@ -10,7 +11,6 @@ import 'package:tiktok_clone/common/widgets/main_navigation/widgets/post_video_b
 import 'package:tiktok_clone/features/users/user_profile_screen.dart';
 import 'package:tiktok_clone/features/videos/video_recording_screen.dart';
 import 'package:tiktok_clone/features/videos/video_timeline_screen.dart';
-import 'package:tiktok_clone/utils.dart';
 
 class MainNavigationScreen extends StatefulWidget {
   static const String routeName = "mainNavigation";
@@ -36,6 +36,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
 
   late int _selectedIndex = _tabs.indexOf(widget.tab);
 
+  bool isDark = false;
+
   void _onTap(int index) {
     context.go("/${_tabs[index]}");
     setState(() {
@@ -48,8 +50,17 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    darkModeConfig.addListener(() {
+      setState(() {
+        isDark = darkModeConfig.value;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor:

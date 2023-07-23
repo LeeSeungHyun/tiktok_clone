@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/utils.dart';
 
 class InterestButton extends StatefulWidget {
   const InterestButton({
@@ -16,10 +16,21 @@ class InterestButton extends StatefulWidget {
 
 class _InterestButtonState extends State<InterestButton> {
   bool _isSelected = false;
+  bool isDark = false;
 
   void _onTap() {
     setState(() {
       _isSelected = !_isSelected;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    darkModeConfig.addListener(() {
+      setState(() {
+        isDark = darkModeConfig.value;
+      });
     });
   }
 
@@ -36,7 +47,7 @@ class _InterestButtonState extends State<InterestButton> {
         decoration: BoxDecoration(
           color: _isSelected
               ? Theme.of(context).primaryColor
-              : isDarkMode(context)
+              : isDark
                   ? Colors.grey.shade700
                   : Colors.white,
           borderRadius: BorderRadius.circular(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/breakpoints.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
-import 'package:tiktok_clone/utils.dart';
 
 final tabs = [
   "Top",
@@ -28,6 +28,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
   late TabController _tabController;
   String _text = "";
 
+  bool isDark = false;
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +51,12 @@ class _DiscoverScreenState extends State<DiscoverScreen>
           _onUnFocusSearch();
         });
       }
+    });
+
+    darkModeConfig.addListener(() {
+      setState(() {
+        isDark = darkModeConfig.value;
+      });
     });
   }
 
@@ -97,7 +105,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
               height: Sizes.size44,
               child: TextField(
                 style: TextStyle(
-                  color: isDarkMode(context) ? Colors.white : Colors.black,
+                  color: isDark ? Colors.white : Colors.black,
                 ),
                 textInputAction: TextInputAction.search,
                 onEditingComplete: _onSearchSubmitted,
@@ -120,7 +128,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                   ),
                   hintText: "Search",
                   hintStyle: TextStyle(
-                    color: isDarkMode(context) ? Colors.white : Colors.black,
+                    color: isDark ? Colors.white : Colors.black,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(
@@ -129,9 +137,8 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                     borderSide: BorderSide.none,
                   ),
                   filled: true,
-                  fillColor: isDarkMode(context)
-                      ? Colors.grey.shade800
-                      : Colors.grey.shade200,
+                  fillColor:
+                      isDark ? Colors.grey.shade800 : Colors.grey.shade200,
                   contentPadding: const EdgeInsets.symmetric(
                     horizontal: Sizes.size12,
                   ),
@@ -225,7 +232,7 @@ class _DiscoverScreenState extends State<DiscoverScreen>
                     Gaps.v8,
                     DefaultTextStyle(
                       style: TextStyle(
-                        color: isDarkMode(context)
+                        color: isDark
                             ? Colors.grey.shade300
                             : Colors.grey.shade600,
                         fontWeight: FontWeight.w600,

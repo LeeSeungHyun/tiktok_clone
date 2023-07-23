@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/features/videos/widgets/video_post.dart';
-import 'package:tiktok_clone/utils.dart';
 
 class VideoTimelineScreen extends StatefulWidget {
   const VideoTimelineScreen({super.key});
@@ -12,6 +12,7 @@ class VideoTimelineScreen extends StatefulWidget {
 
 class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   int _itemCount = 4;
+  bool isDark = false;
 
   final PageController _pageController = PageController();
 
@@ -40,6 +41,16 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    darkModeConfig.addListener(() {
+      setState(() {
+        isDark = darkModeConfig.value;
+      });
+    });
+  }
+
+  @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
@@ -53,7 +64,6 @@ class _VideoTimelineScreenState extends State<VideoTimelineScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = isDarkMode(context);
     SystemChrome.setSystemUIOverlayStyle(
       isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
     );
