@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tiktok_clone/common/widgets/video_config/video_config.dart';
+import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/constants/gaps.dart';
 import 'package:tiktok_clone/constants/sizes.dart';
 import 'package:tiktok_clone/generated/l10n.dart';
@@ -38,7 +38,7 @@ class _VideoCommentsState extends State<VideoComments> {
     final size = MediaQuery.of(context).size;
 
     return ValueListenableBuilder(
-      valueListenable: videoConfig,
+      valueListenable: darkModeConfig,
       builder: (context, value, child) => Container(
         height: size.height * 0.75,
         clipBehavior: Clip.hardEdge,
