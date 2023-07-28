@@ -34,6 +34,7 @@ class _VideoPostState extends State<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  late bool _isMuted = context.read<PlaybackConfigViewModel>().muted;
 
   final String _description = "Cover 친구에서 연인 - standingegg";
   late bool _elipsis;
@@ -50,7 +51,7 @@ class _VideoPostState extends State<VideoPost>
   void _initVideoPlayer() async {
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
-    if (kIsWeb) {
+    if (kIsWeb || _isMuted) {
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
@@ -85,11 +86,13 @@ class _VideoPostState extends State<VideoPost>
   void _onPlaybackConfigChanged() {
     if (!mounted) return;
     final muted = context.read<PlaybackConfigViewModel>().muted;
+    _isMuted = muted;
     if (muted) {
       _videoPlayerController.setVolume(0);
     } else {
       _videoPlayerController.setVolume(1);
     }
+    setState(() {});
   }
 
   void _onVisibilityChanged(VisibilityInfo info) {
@@ -187,15 +190,20 @@ class _VideoPostState extends State<VideoPost>
             top: 40,
             child: IconButton(
               icon: FaIcon(
-                context.watch<PlaybackConfigViewModel>().muted
+                _isMuted
                     ? FontAwesomeIcons.volumeOff
                     : FontAwesomeIcons.volumeHigh,
                 color: Colors.white,
               ),
               onPressed: () {
-                context
-                    .read<PlaybackConfigViewModel>()
-                    .setMuted(!context.read<PlaybackConfigViewModel>().muted);
+                _isMuted = !_isMuted;
+                if (_isMuted) {
+                  _videoPlayerController.setVolume(0);
+                } else {
+                  _videoPlayerController.setVolume(1);
+                }
+
+                setState(() {});
               },
             ),
           ),
