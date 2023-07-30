@@ -1,30 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:provider/provider.dart';
 import 'package:tiktok_clone/common/widgets/video_config/dark_mode_config.dart';
 import 'package:tiktok_clone/features/videos/view_models/playback_config_vm.dart';
 
-class SettingsScreen extends StatefulWidget {
+// Riverpod에서 가져온다.
+class SettingsScreen extends ConsumerWidget {
   const SettingsScreen({super.key});
 
+  // bool _notifications = false;
   @override
-  State<SettingsScreen> createState() => _SettingsScreenState();
-}
-
-class _SettingsScreenState extends State<SettingsScreen> {
-  bool _notifications = false;
-
-  void _onNotificationsChanged(bool? newValue) {
-    if (newValue == null) return;
-    setState(() {
-      _notifications = newValue;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // print(Localizations.localeOf(context));
     return Localizations.override(
       context: context,
@@ -46,36 +34,30 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 subtitle: const Text("you wanna Dark mode?"),
               ),
             ),
-            // SwitchListTile.adaptive(
-            //   value: context.watch<VideoConfig>().isMuted,
-            //   onChanged: (value) => context.read<VideoConfig>().toggleIsMuted(),
-            //   title: const Text("Aute Mute"),
-            //   subtitle: const Text("Videos muted by default."),
-            // ),
             SwitchListTile.adaptive(
-              value: context.watch<PlaybackConfigViewModel>().muted,
+              value: ref.watch(playbackConfigProvider).muted,
               onChanged: (value) =>
-                  context.read<PlaybackConfigViewModel>().setMuted(value),
+                  ref.read(playbackConfigProvider.notifier).setMuted(value),
               title: const Text("Mute video"),
               subtitle: const Text("Video will be muted by default."),
             ),
             SwitchListTile.adaptive(
-              value: context.watch<PlaybackConfigViewModel>().autoplay,
+              value: ref.watch(playbackConfigProvider).autoplay,
               onChanged: (value) =>
-                  context.read<PlaybackConfigViewModel>().setAutoplay(value),
+                  ref.read(playbackConfigProvider.notifier).setAutoplay(value),
               title: const Text("Autoplay"),
               subtitle: const Text("Video will start playing automatically."),
             ),
             SwitchListTile.adaptive(
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) => {},
               title: const Text("Enable notifications"),
               subtitle: const Text("Enable notifications"),
             ),
             CheckboxListTile(
               activeColor: Colors.black,
-              value: _notifications,
-              onChanged: _onNotificationsChanged,
+              value: false,
+              onChanged: (value) => {},
               title: const Text("Marketing emails"),
               subtitle: const Text("We won't spam you."),
             ),
@@ -89,7 +71,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (kDebugMode) {
                   print(date);
                 }
-                if (!mounted) return;
                 final time = await showTimePicker(
                   context: context,
                   initialTime: TimeOfDay.now(),
@@ -97,7 +78,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (kDebugMode) {
                   print(time);
                 }
-                if (!mounted) return;
                 final booking = await showDateRangePicker(
                   context: context,
                   firstDate: DateTime(1980),
