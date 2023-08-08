@@ -33,7 +33,12 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
   }
 
   void _onNextTap() {
-    ref.read(signUpProvider.notifier).signUp();
+    final state = ref.read(signUpForm.notifier).state;
+    ref.read(signUpForm.notifier).state = {
+      ...state,
+      "birth": _birthdayController.text,
+    };
+    ref.read(signUpProvider.notifier).signUp(context);
     // context.goNamed(InterestsScreen.routeName);
   }
 
@@ -104,7 +109,7 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
       ),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
-          height: 300,
+          height: 400,
           child: CupertinoDatePicker(
             maximumDate: initialDate,
             initialDateTime: initialDate,
