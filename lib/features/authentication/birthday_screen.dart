@@ -108,14 +108,12 @@ class _BirthdayScreenState extends ConsumerState<BirthdayScreen> {
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        child: SizedBox(
-          height: 400,
-          child: CupertinoDatePicker(
-            maximumDate: initialDate,
-            initialDateTime: initialDate,
-            mode: CupertinoDatePickerMode.date,
-            onDateTimeChanged: _setTextFieldDate,
-          ),
+        height: 400,
+        child: CupertinoDatePicker(
+          maximumDate: initialDate,
+          initialDateTime: initialDate,
+          mode: CupertinoDatePickerMode.date,
+          onDateTimeChanged: _setTextFieldDate,
         ),
       ),
     );
