@@ -19,10 +19,15 @@ class UserRepository {
     return doc.data();
   }
 
-  // update profile
+  //upload profile
   Future<void> uploadAvatar(File file, String fileName) async {
     final fileRef = _storage.ref().child("avatars/$fileName");
     await fileRef.putFile(file);
+  }
+
+  // update profile
+  Future<void> updateUser(String uid, Map<String, dynamic> data) async {
+    await _db.collection("users").doc(uid).update(data);
   }
 }
 
