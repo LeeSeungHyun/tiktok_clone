@@ -60,7 +60,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     SystemChrome.setSystemUIOverlayStyle(
       isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
     );
-    return ref.watch(userProvider).when(
+    return ref.watch(usersProvider).when(
           error: (error, stackTrace) => Center(
             child: Text(
               error.toString(),

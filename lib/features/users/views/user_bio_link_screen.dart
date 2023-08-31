@@ -18,12 +18,12 @@ class _UserBioLinkScreenState extends ConsumerState<UserBioLinkScreen> {
   @override
   void initState() {
     super.initState();
-    _bioController.text = ref.read(userProvider).value!.bio;
-    _linkController.text = ref.read(userProvider).value!.link;
+    _bioController.text = ref.read(usersProvider).value!.bio;
+    _linkController.text = ref.read(usersProvider).value!.link;
   }
 
   void updateBioLink() async {
-    await ref.read(userProvider.notifier).updateProfile(
+    await ref.read(usersProvider.notifier).updateProfile(
       {"bio": _bioController.text, "link": _linkController.text},
     );
   }

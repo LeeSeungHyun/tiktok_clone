@@ -19,7 +19,7 @@ class AvatarViewModel extends AsyncNotifier<void> {
     final fileName = ref.read(authRepo).user!.uid;
     state = await AsyncValue.guard(() async {
       await _repository.uploadAvatar(file, fileName);
-      await ref.read(userProvider.notifier).onAvatarUpload();
+      await ref.read(usersProvider.notifier).onAvatarUpload();
     });
   }
 }
