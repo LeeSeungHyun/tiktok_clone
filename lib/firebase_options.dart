@@ -25,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -69,7 +66,19 @@ class DefaultFirebaseOptions {
     messagingSenderId: '352188565720',
     projectId: 'tictok-iop',
     storageBucket: 'tictok-iop.appspot.com',
+    androidClientId: '352188565720-t07q74fm6ureqievf5offhidnj5qtvbt.apps.googleusercontent.com',
     iosClientId: '352188565720-vitc8v21d9k24plr9lqnosk1f9kq9tnk.apps.googleusercontent.com',
     iosBundleId: 'com.tiktok.tiktokClone',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyC3k7V49-YmvRsxtcvu59KVnoJpbIHXefc',
+    appId: '1:352188565720:ios:5a23b70caf5654eb0a2fad',
+    messagingSenderId: '352188565720',
+    projectId: 'tictok-iop',
+    storageBucket: 'tictok-iop.appspot.com',
+    androidClientId: '352188565720-t07q74fm6ureqievf5offhidnj5qtvbt.apps.googleusercontent.com',
+    iosClientId: '352188565720-oataogl8cru80hcpqbugtliofhclr6bi.apps.googleusercontent.com',
+    iosBundleId: 'com.example.tiktokClone',
   );
 }
