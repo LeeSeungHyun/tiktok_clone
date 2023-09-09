@@ -22,6 +22,31 @@ class VideosRepository {
   Future<void> saveVideo(VideoModel data) async {
     await _db.collection("videos").add(data.toJson());
   }
+
+  // get videos
+  Future<QuerySnapshot<Map<String, dynamic>>> fetchVideos({
+    int? lastItemCreatedAt,
+  }) {
+    final query = _db
+        .collection("videos")
+        .orderBy("createdAt", descending: true)
+        .limit(2);
+    if (lastItemCreatedAt == null) {
+      return query.get();
+    } else {
+      return query.startAfter([lastItemCreatedAt]).get();
+    }
+  }
+
+  // likes video
+  Future<void> likeVideo(String videoId, String userId) async {
+    await _db.collection("likes").add(
+      {
+        "videoId": videoId,
+        "userId": userId,
+      },
+    );
+  }
 }
 
 final videosRepo = Provider((ref) => VideosRepository());
