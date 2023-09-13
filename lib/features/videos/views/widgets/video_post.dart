@@ -38,6 +38,8 @@ class VideoPostState extends ConsumerState<VideoPost>
   late final AnimationController _animationController;
 
   bool _isPaused = false;
+  bool _isLiked = false;
+  late int likeCount;
   late bool _isMuted = ref.read(playbackConfigProvider).muted;
 
   String _description = "";
@@ -52,19 +54,30 @@ class VideoPostState extends ConsumerState<VideoPost>
     }
   }
 
-  void _onLikeTap() {
-    ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+  void _onLikeTap() async {
+    await ref.read(videoPostProvider(widget.videoData.id).notifier).likeVideo();
+    if (_isLiked) {
+      likeCount = likeCount - 1;
+    } else {
+      likeCount = likeCount + 1;
+    }
+    _isLiked = !_isLiked;
+    setState(() {});
   }
 
-  void _initVideoPlayer() async {
+  Future<void> _initVideoPlayer() async {
     _videoPlayerController =
         VideoPlayerController.asset("assets/videos/standingegg.mp4");
+    likeCount = widget.videoData.likes;
     await _videoPlayerController.initialize();
     await _videoPlayerController.setLooping(true);
     if (kIsWeb || _isMuted) {
       await _videoPlayerController.setVolume(0);
     }
     _videoPlayerController.addListener(_onVideoChange);
+    _isLiked = await ref
+        .read(videoPostProvider(widget.videoData.id).notifier)
+        .islikedVideo();
     setState(() {});
   }
 
@@ -268,9 +281,22 @@ class VideoPostState extends ConsumerState<VideoPost>
                 Gaps.v24,
                 GestureDetector(
                   onTap: _onLikeTap,
-                  child: VideoButton(
-                    icon: FontAwesomeIcons.solidHeart,
-                    text: S.of(context).likeCount(widget.videoData.likes),
+                  child: Column(
+                    children: [
+                      FaIcon(
+                        FontAwesomeIcons.solidHeart,
+                        color: _isLiked ? Colors.red : Colors.white,
+                        size: Sizes.size40,
+                      ),
+                      Gaps.v5,
+                      Text(
+                        S.of(context).likeCount(likeCount),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Gaps.v24,
