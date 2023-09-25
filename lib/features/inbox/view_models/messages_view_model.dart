@@ -33,12 +33,13 @@ final messagesProvider = AsyncNotifierProvider<MessagesViewModel, void>(
 );
 
 // autoDispose를 해주어야 화면에서 벗어났을 때 데이터를 listening 하지 않는다.
-final chatProvider = StreamProvider.autoDispose<List<MessageModel>>((ref) {
+final chatProvider = StreamProvider.autoDispose
+    .family<List<MessageModel>, String>((ref, chatRoomId) {
   final db = FirebaseFirestore.instance;
 
   return db
       .collection("chat_rooms")
-      .doc("qebrazcxNMLuhs2mXMKU")
+      .doc(chatRoomId)
       .collection("texts")
       .orderBy("createdAt")
       .snapshots()

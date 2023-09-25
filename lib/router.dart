@@ -18,7 +18,6 @@ final routerProvider = Provider((ref) {
     initialLocation: "/home",
     redirect: (context, state) {
       final isLoggedIn = ref.read(authRepo).isLoggedIn;
-      print(isLoggedIn);
       if (!isLoggedIn) {
         if (state.matchedLocation != SingUpScreen.routeURL &&
             state.matchedLocation != LoginScreen.routeURL) {
@@ -65,9 +64,9 @@ final routerProvider = Provider((ref) {
             name: ChatDetailScreen.routeName,
             path: ChatDetailScreen.routeURL,
             builder: (context, state) {
-              final chatId = state.pathParameters["chatId"]!;
+              final chatRoomId = state.pathParameters["chatRoomId"]!;
               return ChatDetailScreen(
-                chatId: chatId,
+                chatRoomId: chatRoomId,
               );
             },
           )
