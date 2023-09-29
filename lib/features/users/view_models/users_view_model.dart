@@ -26,6 +26,14 @@ class UsersViewModel extends AsyncNotifier<UserProfileModel> {
     return UserProfileModel.empty();
   }
 
+  FutureOr<List<UserProfileModel>> getUserProfiles() async {
+    final result = await _usersRepository.getUserProfiles();
+    final profiles = result.docs.map(
+      (doc) => UserProfileModel.fromJson(doc.data()),
+    );
+    return profiles.toList();
+  }
+
   Future<void> createAccount(
     UserCredential credential,
     String email,

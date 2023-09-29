@@ -8,6 +8,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 class UserRepository {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
   final FirebaseStorage _storage = FirebaseStorage.instance;
+  // // create profile
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserProfiles() {
+    final query = _db.collection("users");
+    return query.get();
+  }
+
   // create profile
   Future<void> createProfile(UserProfileModel profile) async {
     await _db.collection("users").doc(profile.uid).set(profile.toJson());
